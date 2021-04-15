@@ -49,7 +49,7 @@
     .hl {
       color: var(--base);
     }
-    
+
     img {
       background: var(--base);
       padding: var(--spacing);
@@ -59,21 +59,13 @@
   </style>
 
   <script>
-    let root = document.querySelector(":root");
-    let spacing = document.getElementById("spacing");
-    let blur = document.getElementById("blur");
-    let base = document.getElementById("base");
-    spacing.addEventListener("input", () => {
-      root.style.setProperty("--spacing", `${spacing.value}px`)
-    })
-    blur.addEventListener("input", () => {
-      root.style.setProperty("--blur", `${blur.value}px`)
-    })
-    base.addEventListener("input", () => {
-      root.style.setProperty("--base", base.value)
-    })
-
-
+    let inputs = document.querySelectorAll(".controls input")
+    function handleChange () {
+      let suffix = this.dataset.sizing || "";
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+    inputs.forEach(input => input.addEventListener("input", handleChange))
+   
   </script>
 
 </body>
