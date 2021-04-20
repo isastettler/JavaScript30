@@ -1,10 +1,18 @@
 let allPanel = document.querySelectorAll(".panel");
-allPanel.forEach(panel => panel.addEventListener("click", onClick))
 
-
-
-function onClick(e){
-    allPanel.forEach(panel => panel.classList.remove("open"))
-   e.target.classList.add("open")
-   console.log(e.target.children)
+function onClick() {
+    //added line for improved CSS readability
+    allPanel.forEach((panel) => panel.classList.remove("open"));
+    this.classList.toggle('open')
 }
+
+function transition(e) {
+    if (e.propertyName.includes("flex")) {
+        this.classList.toggle('open-active');
+    }
+}
+
+allPanel.forEach((panel) => panel.addEventListener("click", onClick));
+allPanel.forEach((panel) => panel.addEventListener("transitionend", transition));
+
+
