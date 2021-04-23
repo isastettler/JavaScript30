@@ -16,6 +16,52 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+let inputString = "";
+//on typing in input field
+function onInput(e){
+  if(e.data){
+    inputString = `${inputString}${e.data}`
+  } else {
+   inputString = inputString.slice(0, -1)
+  }
+  fetchData().then(places => filterByChar(inputString, places))
+}
+const inputField = document.querySelector(".search");
+inputField.addEventListener('input', onInput)
+inputField.addEventListener('input', appendPlace)
+
+//filters places with input field information
+function filterByChar(str, places){
+  str = str.toLowerCase()
+  places.filter(place => {
+    if(place.city.toLowerCase().includes(str)){
+      appendPlace(place)
+    }
+    if(place.state.toLowerCase().includes(str)){
+      appendPlace(place)
+    }
+  })
+}
+
+function appendPlace(place){
+  const node = document.querySelector(".suggestions");
+  const listItem = document.createElement("li");
+  listItem.innerText = `${place.city} ${place.state} ${place.population}`
+  node.appendChild(listItem)
+}
+
+//fetch data from api
+async function fetchData(){
+  let response = await fetch(endpoint);
+  if(!response.ok){
+    throw new Error(`HTTP error! status ${response.status}`)
+  }
+  let places = await response.json();
+  return places
+}
+// fetchData().catch(e => {console.log("there was a problem with fetching the data" + e.message)});
+
+
 
 </script>
 </body>
