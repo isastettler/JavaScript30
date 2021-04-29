@@ -27,8 +27,6 @@ ctx.lineCap = 'round';
 function draw(e) {
   if (!isDrawing) return;
   ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-
-  // console.log(e);
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(e.offsetX, e.offsetY);
@@ -36,7 +34,3 @@ function draw(e) {
   [lastX, lastY] = [e.offsetX, e.offsetY];
   hue++;
 }
-
-// ctx.lineWidth = 10;
-// ctx.fillRect(0, 0, canvas.width, canvas.height);
-// ctx.fill();
