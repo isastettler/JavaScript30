@@ -32,10 +32,23 @@ function onSkip(){
 const skipButtons=  document.querySelectorAll(".player__button[data-skip]");
 skipButtons.forEach(skipButton => skipButton.addEventListener("click", onSkip))
 
-//scrub functionallity
+//progress bar update
 function updateProgressBar(){
-    let percentage = Math.floor((100 / video.duration) * video.currentTime);
-   progressFill.style.flexBasis = `${percentage}%`;
+    let percentage = (100 / video.duration) * video.currentTime;
+    progressFill.style.flexBasis = `${percentage}%`;
 }
 const progressFill = document.querySelector(".progress__filled")
 video.addEventListener("timeupdate", updateProgressBar)
+
+//scrub progress bar
+function onScrub(){
+    if(scrubOn){
+        console.log("move progressFill")
+    }
+}
+
+let scrubOn = false;
+const progressBar = document.querySelector(".progress");
+progressBar.addEventListener("mousedown", () => scrubOn = true)
+progressBar.addEventListener("mousemove", onScrub)
+progressBar.addEventListener("mouseup", () => scrubOn = false)
